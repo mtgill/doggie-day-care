@@ -1,0 +1,28 @@
+const employees = [
+  {
+    id: 'employee1',
+    imageUrl: 'https://cdn.theatlantic.com/assets/media/img/mt/2015/09/RTXV9U7/lead_720_405.jpg?mod=1533691772',
+    position: 'Walker',
+    name: 'Chuck',
+  },
+  {
+    id: 'employee2',
+    imageUrl: 'https://cf.ltkcdn.net/dogs/images/std/207268-675x450-Yorkshire-terrier-being-bru.jpg',
+    position: 'Groomer',
+    name: 'Angie',
+  },
+  {
+    id: 'employee3',
+    imageUrl: 'https://canineminded.com/wp-content/uploads/2016/03/11708000_957920684268130_1999317775838605723_o.jpg',
+    position: 'Trainer',
+    name: 'Kevin',
+  },
+  {
+    id: 'employee4',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/Janitor-scrubs.jpg/250px-Janitor-scrubs.jpg',
+    position: 'Custodian',
+    name: 'Janitor',
+  },
+];
+
+export default employees;
