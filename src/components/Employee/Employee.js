@@ -1,8 +1,14 @@
 import React from 'react';
 
+import employeeShape from '../../helpers/propz/employeeShape';
+
 import './Employee.scss';
 
 class Employee extends React.Component {
+  static employeeShape = {
+    employee: employeeShape.employeeShape,
+  }
+
   render() {
     const { employee } = this.props;
     return (
