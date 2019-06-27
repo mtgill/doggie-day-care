@@ -24,9 +24,9 @@ class Home extends React.Component {
     const { employees } = this.state;
     return (
       <div className="Home">
-      <div>Dogs</div>
+      <div><h2>Dogs</h2></div>
       <DogPen dogs={dogs}/>
-      <div>Employees</div>
+      <div><h2>Employees</h2></div>
       <StaffRoom employees={employees}/>
     </div>
     );
