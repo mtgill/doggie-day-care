@@ -1,25 +1,28 @@
 import React from 'react';
 
-import PropTypes from 'prop-types';
-
 import './StaffRoom.scss';
 
 import Employee from '../Employee/Employee';
-import employeeShape from '../../helpers/propz/employeeShape';
+import employeeData from '../../helpers/data/employeeData';
 
 class StaffRoom extends React.Component {
-  static propTypes = {
-    employee: PropTypes.arrayOf(employeeShape.employeeShape),
+  state = {
+    employees: [],
+  }
+
+  componentDidMount() {
+    employeeData.getemployees()
+      .then(employees => this.setState({ employees }))
+      .catch(err => console.error('no eomployees available', err));
   }
 
   render() {
-    const { employees } = this.props;
-    const makeEmployees = employees.map(employee => (
+    const employeeComponents = this.state.employees.map(employee => (
       <Employee key={employee.id} employee={employee} />
     ));
     return (
       <div className="StaffRoom d-flex flex-wrap">
-      { makeEmployees }
+      {employeeComponents}
       </div>
     );
   }
