@@ -28,7 +28,7 @@ class Home extends React.Component {
         <DogPen />
          <div><h2>Employees</h2></div>
          <StaffRoom />
-         <div><h2>Walks</h2></div>
+         <h2>Walks</h2>
         <div className="row">
         {walkComponents}
       </div>
