@@ -24,11 +24,14 @@ class Home extends React.Component {
     ));
     return (
       <div className="Home">
-      <div><h2>Dogs</h2></div>
-      <DogPen />
-      <div><h2>Employees</h2></div>
-      <StaffRoom />
-      <div className="row">{walkComponents}</div>
+        <div><h2>Dogs</h2></div>
+        <DogPen />
+         <div><h2>Employees</h2></div>
+         <StaffRoom />
+         <div><h2>Walks</h2></div>
+        <div className="row">
+        {walkComponents}
+      </div>
     </div>
     );
   }

@@ -1,8 +1,14 @@
 import React from 'react';
 
+import walkShape from '../../helpers/propz/walkShape';
+
 import './Walk.scss';
 
 class Walk extends React.Component {
+  static propTypes = {
+    walk: walkShape.walkShape,
+  }
+
   render() {
     const { walk } = this.props;
     return (
