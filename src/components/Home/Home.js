@@ -12,15 +12,25 @@ class Home extends React.Component {
     walks: [],
   }
 
-  componentDidMount() {
+  getWalks = () => {
     walkData.getWalks()
       .then(walks => this.setState({ walks }))
       .catch(err => console.error('no walks available', err));
   }
 
+  componentDidMount() {
+    this.getWalks();
+  }
+
+  deleteWalks = (walkId) => {
+    walkData.deleteWalks(walkId)
+      .then(() => this.getWalks())
+      .catch(err => console.error('error with delete request', err));
+  }
+
   render() {
     const walkComponents = this.state.walks.map(walk => (
-      <Walk key={walk.id} walk={walk} />
+      <Walk key={walk.id} walk={walk} deleteWalks={this.deleteWalks}/>
     ));
     return (
       <div className="Home">
