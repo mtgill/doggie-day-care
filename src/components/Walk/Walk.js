@@ -1,8 +1,16 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+import walkShape from '../../helpers/propz/walkShape';
+
 import './Walk.scss';
 
 class Walk extends React.Component {
+  static propTypes = {
+    walk: walkShape.walkShape,
+    deleteWalks: PropTypes.func.isRequired,
+  }
+
   deleteWalkEvent = (e) => {
     const { walk, deleteWalks } = this.props;
     e.preventDefault();
