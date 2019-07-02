@@ -1,5 +1,6 @@
+/* eslint-disable max-len */
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import './Home.scss';
 
 import DogPen from '../Dog/DogPen/DogPen';
@@ -14,6 +15,17 @@ class Home extends React.Component {
     dogs: [],
     employees: [],
     walks: [],
+    dogsDropdownOpen: false,
+    dogValue: 'Dogs To Walk',
+  }
+
+  toggle = this.toggle.bind(this);
+
+  toggle(e) {
+    e.preventDefault();
+    this.setState(prevState => ({
+      dogsDropdownOpen: !prevState.dogsDropdownOpen,
+    }));
   }
 
   getWalks = () => {
@@ -39,33 +51,34 @@ class Home extends React.Component {
       .catch(err => console.error('error with delete request', err));
   }
 
+  getDogName = (e) => {
+    e.preventDefault();
+    const dogToWalk = e.target.name;
+    this.setState({
+      dogValue: e.target.name,
+    });
+    console.error('dog to walk', dogToWalk);
+  }
+
   render() {
     const { dogs, employees } = this.state;
     const walkComponents = this.state.walks.map(walk => (
       <Walk key={walk.id} walk={walk} deleteWalks={this.deleteWalks}/>
     ));
     const dogOptions = this.state.dogs.map(dog => (
-      <option key={dog.id}>{dog.name}</option>
+      <DropdownItem key={dog.id} name={dog.name} onClick={this.getDogName}>{dog.name}</DropdownItem>
     ));
     const employeeOptions = this.state.employees.map(employee => (
-      <option key={employee.id}>{employee.name}</option>
+      <DropdownItem key={employee.id}>{employee.name}</DropdownItem>
     ));
     return (
       <div className="Home">
-        <Form>
-        <FormGroup>
-          <Label for="exampleSelect">Select a Dog</Label>
-          <Input type="select" name="select" id="exampleSelect">
+        <Dropdown isOpen={this.state.dogsDropdownOpen} onClick={this.toggle}>
+        <DropdownToggle caret>{this.state.dogValue}</DropdownToggle>
+        <DropdownMenu>
             {dogOptions}
-          </Input>
-        </FormGroup>
-        <FormGroup>
-          <Label for="exampleSelect">Select an Employee</Label>
-          <Input type="select" name="select" id="exampleSelect">
-            {employeeOptions}
-          </Input>
-        </FormGroup>
-        </Form>
+        </DropdownMenu>
+        </Dropdown>
       <div><h2>Dogs</h2></div>
       <DogPen dogs={ dogs }/>
       <div><h2>Employees</h2></div>
