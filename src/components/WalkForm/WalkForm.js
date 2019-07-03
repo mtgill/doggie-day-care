@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 import React from 'react';
 import {
+  Input,
+  InputGroup,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
@@ -15,11 +17,17 @@ class WalkForm extends React.Component {
     employeeDropdownOpen: false,
     dogName: 'Dogs To Walk',
     employeeName: 'Employee for Walk',
+    date: '',
   }
 
   dogToggle = this.dogToggle.bind(this);
 
   employeeToggle = this.employeeToggle.bind(this);
+
+  dateChange = (e) => {
+    e.preventDefault();
+    this.setState({ date: e.target.value });
+  }
 
 
   dogToggle(e) {
@@ -48,8 +56,9 @@ class WalkForm extends React.Component {
 
   saveWalk = (e) => {
     e.preventDefault();
-    this.props.saveNewWalk(this.state.dogName, this.state.employeeName);
+    this.props.saveNewWalk(this.state.dogName, this.state.employeeName, this.state.date);
   }
+
 
   render() {
     const dogOptions = this.props.dogs.map(dog => (
@@ -72,6 +81,12 @@ class WalkForm extends React.Component {
           {employeeOptions}
       </DropdownMenu>
       </UncontrolledDropdown>
+      <InputGroup>
+        <Input
+        onChange={this.dateChange}
+        placeholder="07/03/2019"
+        />
+      </InputGroup>
       <button className="btn btn-success" onClick={this.saveWalk}>Save Walk</button>
       </div>
     );

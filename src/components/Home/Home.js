@@ -59,12 +59,23 @@ class Home extends React.Component {
       .catch(err => console.error('error with delete request', err));
   }
 
-  saveNewWalk = (dogName, employeeName) => {
-    this.buildNewWalk(dogName, employeeName);
+  saveNewWalk = (dogName, employeeName, date) => {
+    this.buildNewWalk(dogName, employeeName, date);
   }
 
-  buildNewWalk = (dogName, employeeName) => {
-    const newWalk = { walks: { ...this.state.newWalk }, dogName, employeeName };
+  buildNewWalk = (dogName, employeeName, date) => {
+    const newWalk = {
+      walks: { ...this.state.newWalk },
+      dogId: dogName,
+      employeeId: employeeName,
+      date,
+    };
+    walkData.addWalk(newWalk)
+      .then(() => {
+        this.setState({ newWalk: {} });
+        this.setState({ walkModal: false });
+        this.getWalks();
+      });
     console.error(newWalk);
   }
 
@@ -87,10 +98,6 @@ class Home extends React.Component {
                saveNewWalk={this.saveNewWalk}
                />
               </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.walkModalToggle}>Do Something</Button>{' '}
-            <Button color="secondary" onClick={this.walkModalToggle}>Cancel</Button>
-          </ModalFooter>
         </Modal>
       <div><h2>Dogs</h2></div>
       <DogPen dogs={ dogs }/>
