@@ -1,5 +1,12 @@
 /* eslint-disable max-len */
 import React from 'react';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from 'reactstrap';
 
 import './Home.scss';
 
@@ -16,6 +23,16 @@ class Home extends React.Component {
     dogs: [],
     employees: [],
     walks: [],
+    walkModal: false,
+  }
+
+  walkModalToggle = this.walkModalToggle.bind(this);
+
+  walkModalToggle(e) {
+    e.preventDefault();
+    this.setState(prevState => ({
+      walkModal: !prevState.walkModal,
+    }));
   }
 
   getWalks = () => {
@@ -49,7 +66,16 @@ class Home extends React.Component {
 
     return (
       <div className="Home">
-      <WalkForm dogs={ dogs } employees={ employees }/>
+        <Button color="danger" onClick={this.walkModalToggle}>Add Walk</Button>
+        <Modal isOpen={this.state.walkModal} toggle={this.walkModalToggle} className={this.props.className}>
+          <ModalHeader toggle={this.walkModalToggle}>Please add Dog and Employee to new walk</ModalHeader>
+          <ModalBody>
+              <WalkForm dogs={ dogs } employees={ employees }/>          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.walkModalToggle}>Do Something</Button>{' '}
+            <Button color="secondary" onClick={this.walkModalToggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
       <div><h2>Dogs</h2></div>
       <DogPen dogs={ dogs }/>
       <div><h2>Employees</h2></div>
