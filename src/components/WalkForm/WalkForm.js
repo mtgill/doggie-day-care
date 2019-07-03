@@ -13,8 +13,8 @@ class WalkForm extends React.Component {
   state = {
     dogsDropdownOpen: false,
     employeeDropdownOpen: false,
-    dogValue: 'Dogs To Walk',
-    employeeValue: 'Employee for Walk',
+    dogName: 'Dogs To Walk',
+    employeeName: 'Employee for Walk',
   }
 
   dogToggle = this.dogToggle.bind(this);
@@ -38,20 +38,17 @@ class WalkForm extends React.Component {
 
   getDogName = (e) => {
     e.preventDefault();
-    const dogToWalk = e.target.name;
-    this.setState({
-      dogValue: e.target.name,
-    });
-    console.error('dog to walk', dogToWalk);
+    this.setState({ dogName: e.target.name });
   }
 
   getEmployeeName = (e) => {
     e.preventDefault();
-    const employeeToWalk = e.target.name;
-    this.setState({
-      employeeValue: e.target.name,
-    });
-    console.error('dog to walk', employeeToWalk);
+    this.setState({ employeeName: e.target.name });
+  }
+
+  saveWalk = (e) => {
+    e.preventDefault();
+    this.props.saveNewWalk(this.state.dogName, this.state.employeeName);
   }
 
   render() {
@@ -64,17 +61,18 @@ class WalkForm extends React.Component {
     return (
       <div>
       <UncontrolledDropdown isOpen={this.state.dogsDropdownOpen} onClick={this.dogToggle}>
-      <DropdownToggle caret>{this.state.dogValue}</DropdownToggle>
+      <DropdownToggle caret>{this.state.dogName}</DropdownToggle>
       <DropdownMenu>
           {dogOptions}
       </DropdownMenu>
       </UncontrolledDropdown>
       <UncontrolledDropdown isOpen={this.state.employeeDropdownOpen} onClick={this.employeeToggle}>
-      <DropdownToggle caret>{this.state.employeeValue}</DropdownToggle>
+      <DropdownToggle caret>{this.state.employeeName}</DropdownToggle>
       <DropdownMenu>
           {employeeOptions}
       </DropdownMenu>
       </UncontrolledDropdown>
+      <button className="btn btn-success" onClick={this.saveWalk}>Save Walk</button>
       </div>
     );
   }

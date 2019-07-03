@@ -24,6 +24,7 @@ class Home extends React.Component {
     employees: [],
     walks: [],
     walkModal: false,
+    newWalk: {},
   }
 
   walkModalToggle = this.walkModalToggle.bind(this);
@@ -58,19 +59,34 @@ class Home extends React.Component {
       .catch(err => console.error('error with delete request', err));
   }
 
+  saveNewWalk = (dogName, employeeName) => {
+    this.buildNewWalk(dogName, employeeName);
+  }
+
+  buildNewWalk = (dogName, employeeName) => {
+    const newWalk = { walks: { ...this.state.newWalk }, dogName, employeeName };
+    console.error(newWalk);
+  }
+
   render() {
-    const { dogs, employees } = this.state;
+    const { dogs, employees, newWalk } = this.state;
     const walkComponents = this.state.walks.map(walk => (
       <Walk key={walk.id} walk={walk} deleteWalks={this.deleteWalks}/>
     ));
 
     return (
       <div className="Home">
-        <Button color="danger" onClick={this.walkModalToggle}>Add Walk</Button>
+        <Button color="warning" onClick={this.walkModalToggle}>Add New Walk</Button>
         <Modal isOpen={this.state.walkModal} toggle={this.walkModalToggle} className={this.props.className}>
           <ModalHeader toggle={this.walkModalToggle}>Please add Dog and Employee to new walk</ModalHeader>
           <ModalBody>
-              <WalkForm dogs={ dogs } employees={ employees }/>          </ModalBody>
+              <WalkForm
+               dogs={ dogs }
+               employees={ employees }
+               newWalk={ newWalk }
+               saveNewWalk={this.saveNewWalk}
+               />
+              </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.walkModalToggle}>Do Something</Button>{' '}
             <Button color="secondary" onClick={this.walkModalToggle}>Cancel</Button>
