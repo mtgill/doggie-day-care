@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
+
 import './Home.scss';
 
 import DogPen from '../Dog/DogPen/DogPen';
@@ -9,23 +9,13 @@ import StaffRoom from '../StaffRoom/StaffRoom';
 import employeeData from '../../helpers/data/employeeData';
 import walkData from '../../helpers/data/walkData';
 import Walk from '../Walk/Walk';
+import WalkForm from '../WalkForm/WalkForm';
 
 class Home extends React.Component {
   state = {
     dogs: [],
     employees: [],
     walks: [],
-    dogsDropdownOpen: false,
-    dogValue: 'Dogs To Walk',
-  }
-
-  toggle = this.toggle.bind(this);
-
-  toggle(e) {
-    e.preventDefault();
-    this.setState(prevState => ({
-      dogsDropdownOpen: !prevState.dogsDropdownOpen,
-    }));
   }
 
   getWalks = () => {
@@ -51,34 +41,15 @@ class Home extends React.Component {
       .catch(err => console.error('error with delete request', err));
   }
 
-  getDogName = (e) => {
-    e.preventDefault();
-    const dogToWalk = e.target.name;
-    this.setState({
-      dogValue: e.target.name,
-    });
-    console.error('dog to walk', dogToWalk);
-  }
-
   render() {
     const { dogs, employees } = this.state;
     const walkComponents = this.state.walks.map(walk => (
       <Walk key={walk.id} walk={walk} deleteWalks={this.deleteWalks}/>
     ));
-    const dogOptions = this.state.dogs.map(dog => (
-      <DropdownItem key={dog.id} name={dog.name} onClick={this.getDogName}>{dog.name}</DropdownItem>
-    ));
-    const employeeOptions = this.state.employees.map(employee => (
-      <DropdownItem key={employee.id}>{employee.name}</DropdownItem>
-    ));
+
     return (
       <div className="Home">
-        <UncontrolledDropdown isOpen={this.state.dogsDropdownOpen} onClick={this.toggle}>
-        <DropdownToggle caret>{this.state.dogValue}</DropdownToggle>
-        <DropdownMenu>
-            {dogOptions}
-        </DropdownMenu>
-        </UncontrolledDropdown>
+      <WalkForm dogs={ dogs } employees={ employees }/>
       <div><h2>Dogs</h2></div>
       <DogPen dogs={ dogs }/>
       <div><h2>Employees</h2></div>
