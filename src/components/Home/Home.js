@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormText, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
 import './Home.scss';
 
 import DogPen from '../Dog/DogPen/DogPen';
@@ -73,12 +73,12 @@ class Home extends React.Component {
     ));
     return (
       <div className="Home">
-        <Dropdown isOpen={this.state.dogsDropdownOpen} onClick={this.toggle}>
+        <UncontrolledDropdown isOpen={this.state.dogsDropdownOpen} onClick={this.toggle}>
         <DropdownToggle caret>{this.state.dogValue}</DropdownToggle>
         <DropdownMenu>
             {dogOptions}
         </DropdownMenu>
-        </Dropdown>
+        </UncontrolledDropdown>
       <div><h2>Dogs</h2></div>
       <DogPen dogs={ dogs }/>
       <div><h2>Employees</h2></div>
