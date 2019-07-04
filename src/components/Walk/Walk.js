@@ -9,6 +9,12 @@ class Walk extends React.Component {
     deleteWalks(walk.id);
   }
 
+  selectWalk = (e) => {
+    e.preventDefault();
+    const { walk, selectWalkToEdit } = this.props;
+    selectWalkToEdit(walk.id);
+  }
+
   render() {
     const { walk } = this.props;
     return (
@@ -19,6 +25,7 @@ class Walk extends React.Component {
           <p className="card-text">{walk.dogId}</p>
           <p className="card-text">{walk.employeeId}</p>
           <button className="btn btn-danger" onClick={this.deleteWalkEvent}>X</button>
+          <button className="btn btn-info" onClick={this.selectWalk}>Edit</button>
         </div>
       </div>
     </div>

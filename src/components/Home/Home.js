@@ -25,6 +25,7 @@ class Home extends React.Component {
     walks: [],
     walkModal: false,
     newWalk: {},
+    walkEditing: {},
   }
 
   walkModalToggle = this.walkModalToggle.bind(this);
@@ -60,7 +61,11 @@ class Home extends React.Component {
   }
 
   saveNewWalk = (dogName, employeeName, date) => {
-    this.buildNewWalk(dogName, employeeName, date);
+    if (Object.keys(this.state.walkEditing).length > 0) {
+      this.editWalk(dogName, employeeName, date);
+    } else {
+      this.buildNewWalk(dogName, employeeName, date);
+    }
   }
 
   buildNewWalk = (dogName, employeeName, date) => {
@@ -79,10 +84,38 @@ class Home extends React.Component {
     console.error(newWalk);
   }
 
+  editWalk = (dogName, employeeName, date) => {
+    const updateWalk = { ...this.state.walkEditing };
+    console.error('inside editWalk');
+    const walkId = updateWalk.id;
+    updateWalk.dogId = dogName;
+    updateWalk.employeeId = employeeName;
+    updateWalk.date = date;
+    // walkData.updateWalk(walkId, updateWalk)
+    //   .then(() => {
+    //     this.setState({ updateWalk: {} });
+    //     this.setState({ walkModal: false });
+    //     this.getWalks();
+    //   });
+    console.error(updateWalk);
+  }
+
+  selectWalkToEdit = (walkId) => {
+    this.setState({ walkModal: true });
+    const selectedWalk = this.state.walks.find(x => x.id === walkId);
+    this.setState({ newWalk: selectedWalk.walks, walkEditing: selectedWalk });
+    console.error('walkEditing', selectedWalk);
+  }
+
   render() {
-    const { dogs, employees, newWalk } = this.state;
+    const {
+      dogs,
+      employees,
+      newWalk,
+      walkEditing,
+    } = this.state;
     const walkComponents = this.state.walks.map(walk => (
-      <Walk key={walk.id} walk={walk} deleteWalks={this.deleteWalks}/>
+      <Walk key={walk.id} walk={walk} deleteWalks={this.deleteWalks} selectWalkToEdit={this.selectWalkToEdit}/>
     ));
 
     return (
@@ -96,6 +129,7 @@ class Home extends React.Component {
                employees={ employees }
                newWalk={ newWalk }
                saveNewWalk={this.saveNewWalk}
+               walkEditing={ walkEditing }
                />
               </ModalBody>
         </Modal>

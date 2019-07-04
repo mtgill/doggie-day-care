@@ -20,4 +20,12 @@ const deleteWalks = walkId => axios.delete(`${fbUrl}/walks/${walkId}.json`);
 
 const addWalk = newWalks => axios.post(`${fbUrl}/walks.json`, newWalks);
 
-export default { getWalks, deleteWalks, addWalk };
+const editWalk = (walkId, updateWalk) => axios.put(`${fbUrl}/walks/${walkId}.json`, updateWalk);
+
+
+export default {
+  getWalks,
+  deleteWalks,
+  addWalk,
+  editWalk,
+};

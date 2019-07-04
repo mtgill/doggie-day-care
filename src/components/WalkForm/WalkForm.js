@@ -20,6 +20,12 @@ class WalkForm extends React.Component {
     date: '',
   }
 
+  componentWillUpdate(nextProps) {
+    if (nextProps.walkEditing !== this.props.walkEditing /* && nextProps.walkEditing.dogName */) {
+      this.setState({ dogName: nextProps.orderEditing.dogName, employeeName: nextProps.orderEditing.employeeName, date: nextProps.orderEditing.date });
+    }
+  }
+
   dogToggle = this.dogToggle.bind(this);
 
   employeeToggle = this.employeeToggle.bind(this);
