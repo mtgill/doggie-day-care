@@ -22,7 +22,7 @@ class WalkForm extends React.Component {
 
   componentWillUpdate(nextProps) {
     if (nextProps.walkEditing !== this.props.walkEditing /* && nextProps.walkEditing.dogName */) {
-      this.setState({ dogName: nextProps.orderEditing.dogName, employeeName: nextProps.orderEditing.employeeName, date: nextProps.orderEditing.date });
+      this.setState({ dogName: nextProps.walkEditing.dogName, employeeName: nextProps.walkEditing.employeeId, date: nextProps.walkEditing.date });
     }
   }
 

@@ -61,11 +61,11 @@ class Home extends React.Component {
   }
 
   saveNewWalk = (dogName, employeeName, date) => {
-    if (Object.keys(this.state.walkEditing).length > 0) {
-      this.editWalk(dogName, employeeName, date);
-    } else {
-      this.buildNewWalk(dogName, employeeName, date);
-    }
+    // if (Object.keys(this.state.walkEditing).length > 0) {
+    this.editWalk(dogName, employeeName, date);
+    // } else {
+    // this.buildNewWalk(dogName, employeeName, date);
+    // }
   }
 
   buildNewWalk = (dogName, employeeName, date) => {
@@ -103,7 +103,7 @@ class Home extends React.Component {
   selectWalkToEdit = (walkId) => {
     this.setState({ walkModal: true });
     const selectedWalk = this.state.walks.find(x => x.id === walkId);
-    this.setState({ newWalk: selectedWalk.walks, walkEditing: selectedWalk });
+    this.setState({ newWalk: selectedWalk, walkEditing: selectedWalk });
     console.error('walkEditing', selectedWalk);
   }
 
