@@ -60,13 +60,13 @@ class Home extends React.Component {
       .catch(err => console.error('error with delete request', err));
   }
 
-  // saveNewWalk = (dogName, employeeName, date, walk) => {
-  //   // if (Object.keys(this.state.walkEditing).length > 0) {
-  //   this.editWalk(dogName, employeeName, date, walk);
-  //   // } else {
-  //   // this.buildNewWalk(dogName, employeeName, date);
-  //   // }
-  // }
+  saveNewWalk = (dogName, employeeName, date, id) => {
+    if (Object.keys(this.state.walkEditing).length > 0) {
+      this.editWalk(dogName, employeeName, date, id);
+    } else {
+      this.buildNewWalk(dogName, employeeName, date);
+    }
+  }
 
   buildNewWalk = (dogName, employeeName, date) => {
     const newWalk = {
@@ -81,13 +81,11 @@ class Home extends React.Component {
         this.setState({ walkModal: false });
         this.getWalks();
       });
-    console.error('buildWalk ', newWalk);
   }
 
   editWalk = (dogName, employeeName, date, id) => {
     const updateWalk = { ...this.state.selectedWalk };
     const walkId = id;
-    console.error('walk id', updateWalk.id);
     updateWalk.dogId = dogName;
     updateWalk.employeeId = employeeName;
     updateWalk.date = date;
@@ -97,15 +95,12 @@ class Home extends React.Component {
         this.setState({ walkModal: false });
         this.getWalks();
       });
-    console.error('update walk ', updateWalk);
   }
 
   selectWalkToEdit = (walkId) => {
     this.setState({ walkModal: true });
     const selectedWalk = this.state.walks.find(x => x.id === walkId);
     this.setState({ walkEditing: selectedWalk });
-    // this.saveNewWalk(selectedWalk.dogId, selectedWalk.employeeId, selectedWalk.date, selectedWalk);
-    console.error('walkEditing', selectedWalk.id);
   }
 
   render() {
@@ -131,7 +126,7 @@ class Home extends React.Component {
                newWalk={ newWalk }
                saveNewWalk={this.saveNewWalk}
                walkEditing={ walkEditing }
-               editWalk={this.editWalk}
+               saveNewWalk={this.saveNewWalk}
                />
               </ModalBody>
         </Modal>
