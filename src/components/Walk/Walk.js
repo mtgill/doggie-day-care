@@ -1,12 +1,25 @@
+/* eslint-disable max-len */
 import React from 'react';
 
 import './Walk.scss';
 
 class Walk extends React.Component {
+  componentWillUpdate(nextProps) {
+    if (nextProps.walkEditing !== this.props.walkEditing && nextProps.walkEditing.name) {
+      this.setState({ dogId: nextProps.walkEditing.dogId, employeeId: nextProps.walkEditing.employeeId, date: nextProps.walkEditing.date });
+    }
+  }
+
   deleteWalkEvent = (e) => {
     const { walk, deleteWalks } = this.props;
     e.preventDefault();
     deleteWalks(walk.id);
+  }
+
+  selectWalk = (e) => {
+    e.preventDefault();
+    const { walk, selectWalkToEdit } = this.props;
+    selectWalkToEdit(walk.id);
   }
 
   render() {
@@ -19,6 +32,7 @@ class Walk extends React.Component {
           <p className="card-text">{walk.dogId}</p>
           <p className="card-text">{walk.employeeId}</p>
           <button className="btn btn-danger" onClick={this.deleteWalkEvent}>X</button>
+          <button className="btn btn-info" onClick={this.selectWalk}>Edit</button>
         </div>
       </div>
     </div>

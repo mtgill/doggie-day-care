@@ -20,6 +20,13 @@ class WalkForm extends React.Component {
     date: '',
   }
 
+  componentDidMount() {
+    const { walkEditing } = this.props;
+    if (Object.keys(this.props.walkEditing).length > 0) {
+      this.setState({ dogName: walkEditing.dogId, employeeName: walkEditing.employeeId, date: walkEditing.date });
+    }
+  }
+
   dogToggle = this.dogToggle.bind(this);
 
   employeeToggle = this.employeeToggle.bind(this);
@@ -55,8 +62,12 @@ class WalkForm extends React.Component {
   }
 
   saveWalk = (e) => {
+    const { walkEditing } = this.props;
     e.preventDefault();
-    this.props.saveNewWalk(this.state.dogName, this.state.employeeName, this.state.date);
+    if (walkEditing) {
+      this.props.saveNewWalk(this.state.dogName, this.state.employeeName, this.state.date, walkEditing.id);
+    }
+    // this.props.saveNewWalk(this.state.dogName, this.state.employeeName, this.state.date);
   }
 
 

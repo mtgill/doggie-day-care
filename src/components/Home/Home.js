@@ -25,6 +25,7 @@ class Home extends React.Component {
     walks: [],
     walkModal: false,
     newWalk: {},
+    walkEditing: {},
   }
 
   walkModalToggle = this.walkModalToggle.bind(this);
@@ -59,8 +60,12 @@ class Home extends React.Component {
       .catch(err => console.error('error with delete request', err));
   }
 
-  saveNewWalk = (dogName, employeeName, date) => {
-    this.buildNewWalk(dogName, employeeName, date);
+  saveNewWalk = (dogName, employeeName, date, id) => {
+    if (Object.keys(this.state.walkEditing).length > 0) {
+      this.editWalk(dogName, employeeName, date, id);
+    } else {
+      this.buildNewWalk(dogName, employeeName, date);
+    }
   }
 
   buildNewWalk = (dogName, employeeName, date) => {
@@ -76,13 +81,37 @@ class Home extends React.Component {
         this.setState({ walkModal: false });
         this.getWalks();
       });
-    console.error(newWalk);
+  }
+
+  editWalk = (dogName, employeeName, date, id) => {
+    const updateWalk = { ...this.state.selectedWalk };
+    const walkId = id;
+    updateWalk.dogId = dogName;
+    updateWalk.employeeId = employeeName;
+    updateWalk.date = date;
+    walkData.editWalk(walkId, updateWalk)
+      .then(() => {
+        this.setState({ updateWalk: {}, walkEditing: {} });
+        this.setState({ walkModal: false });
+        this.getWalks();
+      });
+  }
+
+  selectWalkToEdit = (walkId) => {
+    this.setState({ walkModal: true });
+    const selectedWalk = this.state.walks.find(x => x.id === walkId);
+    this.setState({ walkEditing: selectedWalk });
   }
 
   render() {
-    const { dogs, employees, newWalk } = this.state;
+    const {
+      dogs,
+      employees,
+      newWalk,
+      walkEditing,
+    } = this.state;
     const walkComponents = this.state.walks.map(walk => (
-      <Walk key={walk.id} walk={walk} deleteWalks={this.deleteWalks}/>
+      <Walk key={walk.id} walk={walk} deleteWalks={this.deleteWalks} selectWalkToEdit={this.selectWalkToEdit} walkEditing={walkEditing}/>
     ));
 
     return (
@@ -95,6 +124,8 @@ class Home extends React.Component {
                dogs={ dogs }
                employees={ employees }
                newWalk={ newWalk }
+               saveNewWalk={this.saveNewWalk}
+               walkEditing={ walkEditing }
                saveNewWalk={this.saveNewWalk}
                />
               </ModalBody>
