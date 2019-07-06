@@ -1,8 +1,15 @@
+/* eslint-disable max-len */
 import React from 'react';
 
 import './Walk.scss';
 
 class Walk extends React.Component {
+  componentWillUpdate(nextProps) {
+    if (nextProps.walkEditing !== this.props.walkEditing && nextProps.walkEditing.name) {
+      this.setState({ dogId: nextProps.walkEditing.dogId, employeeId: nextProps.walkEditing.employeeId, date: nextProps.walkEditing.date });
+    }
+  }
+
   deleteWalkEvent = (e) => {
     const { walk, deleteWalks } = this.props;
     e.preventDefault();
