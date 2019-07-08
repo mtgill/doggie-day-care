@@ -47,9 +47,9 @@ class Home extends React.Component {
     dogData.getDogs()
       .then(dogs => this.setState({ dogs }))
       .catch(err => console.error('no dogs available', err));
-    employeeData.getemployees()
+    employeeData.getEmployees()
       .then(employees => this.setState({ employees }))
-      .catch(err => console.error('no eomployees available', err));
+      .catch(err => console.error('no employees available', err));
 
     this.getWalks();
   }

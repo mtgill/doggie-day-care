@@ -3,7 +3,7 @@ import firebaseConfig from '../apiKeys.json';
 
 const fbUrl = firebaseConfig.firebaseKeys.databaseURL;
 
-const getemployees = () => new Promise((resolve, reject) => {
+const getEmployees = () => new Promise((resolve, reject) => {
   axios.get(`${fbUrl}/employees.json`)
     .then((res) => {
       const employees = [];
@@ -16,4 +16,4 @@ const getemployees = () => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
-export default { getemployees };
+export default { getEmployees };
